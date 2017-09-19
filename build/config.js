@@ -1,7 +1,7 @@
 const path  = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const ClosureCompilerPlugin = require('webpack-closure-compiler')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 const { resolve } = path
 const ENV = process.env.NODE_ENV
@@ -66,9 +66,8 @@ const config = {
 }
 
 if (IS_PRODUCTION) {
-  config.plugins.push(new ClosureCompilerPlugin({
-    jsCompiler: true,
-    concurrency: 3
+  config.plugins.push(new UglifyJSPlugin({
+    parallel: true
   }))
 }
 
