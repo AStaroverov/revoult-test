@@ -1,4 +1,5 @@
 const path  = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
@@ -61,6 +62,9 @@ const config = {
     new ExtractTextPlugin({
       filename: 'styles.css',
       disable: !IS_PRODUCTION
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(ENV || 'development')
     })
   ]
 }
