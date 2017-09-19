@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export function getLatestRatesByCurrencyName (currency: string, symbols?: Array<string>) {
   if (!isString(currency) || isEmpty(currency)) {
-    throw new Error('getLatestPricesByValut: incorrect currency')
+    throw new Error('getLatestRatesByCurrencyName: incorrect currency')
   }
 
   return axios.get(`${consts.BASE_PATH}/${consts.LATEST}`, {
