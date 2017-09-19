@@ -1,0 +1,71 @@
+.box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.baseCurrencies,
+.secondCurrencies {
+  display: flex;
+  flex-grow: 1;
+  flex-basis: 0;
+  width: 100%;
+}
+
+.carousel {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+  padding: 20px 0;
+  animation: show .2s;
+}
+
+.carousel > :global(.carousel) {
+  display: flex;
+  width: 100%;
+  flex-grow: 1;
+}
+
+@keyframes show {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+@media (orientation: portrait) {
+  .baseCurrencies {
+    position: relative;
+  }
+
+  .baseCurrencies:before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255,255,255, .2);
+  }
+
+  .baseCurrencies:after {
+    content: '';
+    position: absolute;
+    bottom: -28px;
+    left: 50%;
+    margin-left: -7px;
+    width: 0;
+    height: 0;
+    border: 14px solid transparent;
+    border-top-color: rgba(255,255,255, .2);
+  }
+}
+
+@media (orientation: landscape) {
+  .box {
+    flex-direction: row;
+  }
+  .baseCurrencies,
+  .secondCurrencies {
+    overflow: hidden;
+  }
+}

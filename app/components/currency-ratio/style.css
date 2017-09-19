@@ -1,0 +1,30 @@
+.box {
+  position: relative;
+  top: -3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  background-color: rgba(255,255,255, .2);
+  border: 1px solid rgba(255,255,255, .7);
+  border-radius: 3px;
+  font-size: 24px;
+  color: #4a5f77;
+}
+
+.content {
+  animation: show .2s
+}
+
+.equalSign {
+  margin: 0 10px;
+}
+
+.icon {
+  margin-right: 3px;
+}
+
+@keyframes show {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "Revoult",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "server": "webpack-dev-server --config=build/config.js",
+    "build": "NODE_ENV=production webpack --config=build/config.js"
+  },
+  "author": "AStaroverov",
+  "dependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-lodash": "^3.2.11",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-regenerator": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "classnames": "^2.2.5",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "^2.30.1",
+    "img-loader": "^2.0.0",
+    "lodash": "^4.17.4",
+    "react": "next",
+    "react-dom": "next",
+    "react-flex-carousel": "^1.0.1",
+    "react-redux": "^5.0.6",
+    "react-responsive-carousel": "^3.1.25",
+    "redux": "^3.7.2",
+    "reselect": "^3.0.1",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.5.6",
+    "webpack-closure-compiler": "^2.1.5"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^2.7.1"
+  }
+}

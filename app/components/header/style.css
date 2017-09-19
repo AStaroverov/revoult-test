@@ -1,0 +1,12 @@
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+}
+
+.currencyRatio {
+  width: 300px;
+  height: 100%;
+}
