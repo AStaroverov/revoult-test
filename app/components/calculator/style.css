@@ -28,6 +28,12 @@
   animation: show .2s;
 }
 
+@media (max-height: 320px) {
+  .carousel {
+    padding: 0;
+  }
+}
+
 .carousel > :global(.carousel) {
   display: flex;
   width: 100%;

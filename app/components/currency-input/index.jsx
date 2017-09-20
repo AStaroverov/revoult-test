@@ -38,11 +38,12 @@ export default class CurrencyInput extends Component {
       [style.readOnly]: readOnly
     })
     const iconClass = classnames('fa', mapCurrencyToIconClassName[currency], style.walletIcon)
-    const walletClass = classnames(style.row, style.wallet)
+    const inputRowClass = classnames(style.row, style.inputRow)
+    const walletRowClass = classnames(style.row, style.walletRow)
 
     return (
       <div className={style.box}>
-        <div className={style.row}>
+        <div className={inputRowClass}>
           <div className={style.name}>
             {currency}
           </div>
@@ -53,11 +54,10 @@ export default class CurrencyInput extends Component {
               value={value || ''}
               onChange={this.change}
               className={inputClass}
-              maxLength={6}
             />
           </div>
         </div>
-        <div className={walletClass}>
+        <div className={walletRowClass}>
           You have
           <span className={iconClass} />
           {wallet}

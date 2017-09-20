@@ -29,7 +29,7 @@ class Store {
     calculatorActions.setBaseCurrency(availableCurrencies[0])
     calculatorActions.setSecondCurrency(availableCurrencies[1])
     availableCurrencies.forEach((currency: Currency) => {
-      const units = parseFloat(toFixed(Math.random() * 1000, 2))
+      const units = parseFloat(toFixed(Math.random() * 10000, 2))
       walletsActions.addWallet(currency)
       walletsActions.setUnits({currency, units})
     })

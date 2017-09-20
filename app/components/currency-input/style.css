@@ -49,6 +49,14 @@
     padding: 30px 10px;
   }
 
+  .inputRow {
+    flex-direction: column;
+  }
+
+  .walletRow {
+    justify-content: center;
+  }
+
   .input {
     text-align: center;
   }
@@ -58,7 +66,7 @@
   }
 }
 
-.wallet {
+.walletRow {
   color: #4a5f77;
   opacity: .5;
 }
