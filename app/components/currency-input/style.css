@@ -1,8 +1,17 @@
 .box {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   width: 100%;
-  padding: 70px 30px;
+  padding: 0 30px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row + .row {
+  margin-top: 20px;
 }
 
 .name,
@@ -47,4 +56,13 @@
   .name {
     margin-bottom: 20px;
   }
+}
+
+.wallet {
+  color: #4a5f77;
+  opacity: .5;
+}
+
+.walletIcon {
+  margin: 0 5px;
 }

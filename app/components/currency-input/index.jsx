@@ -1,10 +1,12 @@
 // @floww
 import type {Props as ContainerProps} from 'app/containers/currency-input'
 
+import {mapCurrencyToIconClassName} from 'app/constants/currencies'
+
 import {isNumber, last} from 'lodash'
 import React, {Component} from 'react'
 
-import {toFixed} from 'app/utils'
+import {toFixed, tryRead} from 'app/utils'
 
 import classnames from 'classnames'
 import style from './style.css'
@@ -29,29 +31,46 @@ export default class CurrencyInput extends Component {
 
   render () {
     const {currency, readOnly} = this.props
-    const value = this.getModifiedUnits()
+    const value: string = this.getModifiedUnits()
+    const wallet: string = this.getWallet()
 
     const inputClass = classnames(style.input, {
       [style.readOnly]: readOnly
     })
+    const iconClass = classnames('fa', mapCurrencyToIconClassName[currency], style.walletIcon)
+    const walletClass = classnames(style.row, style.wallet)
 
     return (
       <div className={style.box}>
-        <div className={style.name}>
-          {currency}
+        <div className={style.row}>
+          <div className={style.name}>
+            {currency}
+          </div>
+          <div className={style.wrapper}>
+            <input
+              readOnly={readOnly}
+              type='text'
+              value={value || ''}
+              onChange={this.change}
+              className={inputClass}
+              maxLength={6}
+            />
+          </div>
         </div>
-        <div className={style.wrapper}>
-          <input
-            readOnly={readOnly}
-            type='text'
-            value={value || ''}
-            onChange={this.change}
-            className={inputClass}
-            maxLength={6}
-          />
+        <div className={walletClass}>
+          You have
+          <span className={iconClass} />
+          {wallet}
         </div>
       </div>
     )
+  }
+
+  getWallet () {
+    const {wallet} = this.props
+    return wallet === 0
+      ? wallet
+      : parseFloat(toFixed(this.props.wallet, 2))
   }
 
   getModifiedUnits () {
@@ -73,27 +92,59 @@ export default class CurrencyInput extends Component {
   }
 
   change = (event) => {
-    const {props} = this
-    const {value} = event.target
+    this.checkValue(tryRead(() => event.target.value) || '')
+  }
 
+  checkValue (value: string) {
+    if (this.checkAtEmpty(value) || this.checkAtLastDot(value)) return
+
+    const max = this.getMaximum(parseFloat(toFixed(value, 2)))
+    let fixed2Str: string = String(max)
+    let fixed2Numb: number = max
+
+    if (this.checkAtFloatWithLastZero(value, fixed2Str)) return
+
+    this.checkAtCorrect(value, fixed2Numb)
+  }
+
+  checkAtEmpty (value: string): boolean {
     if (value === '') {
-      props.changeUnits(0, props.coefficient)
-      return
+      this.props.changeUnits(0, 1)
+
+      return true
     }
 
-    if (last(value) === '.') {
-      this.setState({unitsTmp: parseInt(value) + '.'})
-      return
+    return false
+  }
+
+  checkAtLastDot (value: string): boolean {
+    const dot = '.'
+
+    if (last(value) === dot && value.indexOf(dot) === value.length - 1) {
+      this.setState({unitsTmp: parseInt(value) + dot})
+
+      return true
     }
 
-    const fixed2 = toFixed(value, 2)
+    return false
+  }
 
+  getMaximum (float: number): boolean {
+    return Math.min(float, this.props.wallet)
+  }
+
+  checkAtFloatWithLastZero (value: string, unitsTmp: string): boolean {
     if (value.includes('.') && last(value) === '0') {
-      this.setState({unitsTmp: fixed2})
-      return
+      this.setState({unitsTmp})
+      return true
     }
 
-    const numb = value === '' ? 0 : parseFloat(fixed2)
+    return false
+  }
+
+  checkAtCorrect (value: string, units: number) {
+    const {props} = this
+    const numb = value === '' ? 0 : units
 
     if (isNumber(numb) && !isNaN(numb) && numb !== props.units) {
       this.setState({unitsTmp: null})

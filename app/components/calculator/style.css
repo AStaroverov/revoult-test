@@ -5,6 +5,13 @@
   width: 100%;
 }
 
+.carousels {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
 .baseCurrencies,
 .secondCurrencies {
   display: flex;
@@ -60,8 +67,29 @@
   }
 }
 
+.convert {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 5px;
+  border-radius: 3px;
+  font-size: 24px;
+  color: #4a5f77;
+  background: rgba(48,149,255, .3);
+  box-shadow: 0 2px 2px 1px rgba(0,0,0, .1);
+  transition: all .15s;
+}
+
+.convert:active {
+  background: rgba(48,149,255, .3);
+  transform: translateY(1px);
+  box-shadow: 0 2px 2px 1px rgba(0,0,0, .0);
+}
+
 @media (orientation: landscape) {
-  .box {
+  .carousels {
     flex-direction: row;
   }
   .baseCurrencies,

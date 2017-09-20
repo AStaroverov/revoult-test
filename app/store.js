@@ -1,10 +1,16 @@
+// @flow
+import {Currency} from 'app/types/currency'
+
 import {availableCurrencies} from 'app/constants/currencies'
 
 import {createStore} from 'redux'
 
+import {toFixed} from 'app/utils'
+
 import reducers from 'app/store/reducers'
 import {actions as currenciesActions} from 'app/store/modules/currencies'
 import {actions as calculatorActions} from 'app/store/modules/calculator'
+import {actions as walletsActions} from 'app/store/modules/wallets'
 import {updateRates} from 'app/actions/currencies'
 
 class Store {
@@ -22,6 +28,13 @@ class Store {
     currenciesActions.setCurrencies(availableCurrencies)
     calculatorActions.setBaseCurrency(availableCurrencies[0])
     calculatorActions.setSecondCurrency(availableCurrencies[1])
+    availableCurrencies.forEach((currency: Currency) => {
+      const units = parseFloat(toFixed(Math.random() * 1000, 2))
+      walletsActions.addWallet(currency)
+      walletsActions.setUnits({currency, units})
+    })
+
+
     updateRates()
   }
 }
