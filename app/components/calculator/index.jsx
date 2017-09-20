@@ -13,26 +13,35 @@ export default class Calculator extends PureComponent {
   props: Props
 
   render () {
-    const {baseCurrencies, secondCurrencies} = this.props
+    const {baseIndex, baseCurrencies, secondIndex, secondCurrencies} = this.props
 
     return (
       <div className={style.box}>
-        <div className={style.baseCurrencies}>
-          <Carousel
-            readOnly={false}
-            index={this.props.baseIndex}
-            currencies={baseCurrencies}
-            onChange={this.changeBaseCurrency}
-          />
+        <div className={style.carousels}>
+          <div className={style.baseCurrencies}>
+            <Carousel
+              readOnly={false}
+              index={baseIndex}
+              currencies={baseCurrencies}
+              onChange={this.changeBaseCurrency}
+            />
+          </div>
+          <div className={style.secondCurrencies}>
+            <Carousel
+              readOnly={true}
+              index={secondIndex}
+              currencies={secondCurrencies}
+              onChange={this.changeSecondCurrency}
+            />
+          </div>
         </div>
-        <div className={style.secondCurrencies}>
-          <Carousel
-            readOnly={true}
-            index={this.props.secondIndex}
-            currencies={secondCurrencies}
-            onChange={this.changeSecondCurrency}
-          />
-        </div>
+        <a
+          role='button'
+          className={style.convert}
+          onClick={this.convert}
+        >
+          Convert
+        </a>
       </div>
     )
   }
@@ -49,5 +58,11 @@ export default class Calculator extends PureComponent {
     const currency = tryRead(() => secondCurrencies[index])
 
     currency && changeSecondCurrency(currency)
+  }
+
+  convert = (e) => {
+    e.preventDefault()
+
+    this.props.convert()
   }
 }

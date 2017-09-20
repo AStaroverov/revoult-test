@@ -9,6 +9,7 @@ import * as calculator from 'app/selectors/calculator'
 
 import {actions as calculatorActions} from 'app/store/modules/calculator'
 import {updateRates} from 'app/actions/currencies'
+import {convertUnitsByCurrentState} from 'app/actions/wallets'
 
 import Component from 'app/components/calculator'
 
@@ -37,14 +38,25 @@ const selectors: () => Selectors = composeSelectors({
 
 type Actions = {
   changeBaseCurrency: (name: string) => void,
-  changeSecondCurrency: (name: string) => void
+  changeSecondCurrency: (name: string) => void,
+  convert: () => void
 }
 const actions = (): Actions => ({
   changeBaseCurrency (name) {
     calculatorActions.setBaseCurrency(name)
+    calculatorActions.setUnits(0)
     updateRates()
   },
-  changeSecondCurrency: calculatorActions.setSecondCurrency
+  changeSecondCurrency: calculatorActions.setSecondCurrency,
+  convert () {
+    try {
+      convertUnitsByCurrentState()
+    } catch (e) {
+      e.message && alert(e.message)
+    }
+
+    calculatorActions.setUnits(0)
+  }
 })
 
 export type Props = Selectors & Actions

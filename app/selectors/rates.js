@@ -5,7 +5,7 @@ import {createSelector} from 'reselect'
 import {tryRead} from 'app/utils'
 import * as calculator from 'app/selectors/calculator'
 
-export const getCoefficient: (Object, { [string]: string }) => ?number = (state, { baseCurrency, secondCurrency }) => {
+export const getCoefficient: (state: Object, { [string]: string }) => ?number = (state, {baseCurrency, secondCurrency}) => {
   return tryRead(() => state.rates[baseCurrency][secondCurrency]) || null
 }
 
