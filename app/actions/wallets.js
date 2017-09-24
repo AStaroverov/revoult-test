@@ -16,7 +16,7 @@ export function convertUnitsByCurrentState () {
   if (fromWallet === toWallet) return
 
   const units: number = calculatorSelectors.getUnits(state)
-  const coefficient: number = ratesSelectors.getCoefficient(state, {baseCurrency: fromWallet, secondCurrency: toWallet})
+  const coefficient: number = ratesSelectors.getCurrentCoefficient(state, {baseCurrency: fromWallet, secondCurrency: toWallet})
   const fromWalletUnits: number = walletsSelectors.getWallet(state, {currency: fromWallet})
 
   if (units <= fromWalletUnits && coefficient) {

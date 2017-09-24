@@ -1,5 +1,6 @@
 .box {
   position: relative;
+  z-index: 2;
   top: -3px;
   display: flex;
   justify-content: center;
@@ -12,8 +13,22 @@
   color: #4a5f77;
 }
 
+.select {
+  width: 100%;
+  animation: show .2s;
+}
+
+.select :global(.Select-control) {
+  cursor: pointer !important;
+  background: none;
+  border: none;
+}
+
+.select :global(.Select-control:hover) {
+ box-shadow: none;
+}
+
 .content {
-  animation: show .2s
 }
 
 .equalSign {

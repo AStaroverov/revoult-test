@@ -35,7 +35,7 @@ const selectors: () => Selectors = composeSelectors({
     if (baseCurrency === currency) {
       return 1
     } else {
-      return rates.getCoefficient(state, {baseCurrency, secondCurrency: currency})
+      return rates.getCurrentCoefficient(state, {baseCurrency, secondCurrency: currency})
     }
   },
   wallet (state, {currency}) {

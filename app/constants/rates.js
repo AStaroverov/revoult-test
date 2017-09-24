@@ -1,0 +1,1 @@
+export const allSources = ['fixer', 'fixer1', 'fixer2']

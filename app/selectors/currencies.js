@@ -1,10 +1,12 @@
 // @flow
+import {Currency} from 'app/types/currency'
 import {Rates} from 'app/types/rates'
 
 import {isNumber} from 'lodash'
 import {createSelector} from 'reselect'
 
 import * as calcSelelctors from 'app/selectors/calculator'
+import * as ratesSelelctors from 'app/selectors/rates'
 
 export const getBaseCurrencies = createSelector(
   state => state.currencies,
@@ -14,8 +16,14 @@ export const getBaseCurrencies = createSelector(
 export const getSecondCurrencies = createSelector(
   calcSelelctors.getBaseCurrency,
   getBaseCurrencies,
-  state => state.rates,
-  (currency: string, currencies: Array<string>, rates: Rates): (?Array<string>) => {
+  ratesSelelctors.getCurrentRates,
+  (
+    currency: Currency,
+    currencies: Array<Currency>,
+    rates: Rates
+  ): (?Array<Currency>) => {
+    if (!rates) return
+
     const currencyRates = rates[currency]
 
     if (!currencyRates) return null

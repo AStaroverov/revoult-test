@@ -2,6 +2,7 @@
 import {Currency} from 'app/types/currency'
 
 import {availableCurrencies} from 'app/constants/currencies'
+import {allSources} from 'app/constants/rates'
 
 import {createStore} from 'redux'
 
@@ -11,7 +12,8 @@ import reducers from 'app/store/reducers'
 import {actions as currenciesActions} from 'app/store/modules/currencies'
 import {actions as calculatorActions} from 'app/store/modules/calculator'
 import {actions as walletsActions} from 'app/store/modules/wallets'
-import {updateRates} from 'app/actions/currencies'
+import {actions as ratesActions} from 'app/store/modules/rates'
+import {updateRates} from 'app/actions/rates'
 
 class Store {
   store = null
@@ -33,7 +35,7 @@ class Store {
       walletsActions.addWallet(currency)
       walletsActions.setUnits({currency, units})
     })
-
+    ratesActions.setSource(allSources[0])
 
     updateRates()
   }

@@ -1,4 +1,4 @@
-import { updateRates } from 'app/actions/currencies'
+import { updateRatesFixer, updateRatesFixer1, updateRatesFixer2 } from 'app/actions/rates'
 
 class Subscriber {
   intervals = []
@@ -13,7 +13,9 @@ class Subscriber {
   }
 
   updateRatesInterval () {
-    this.intervals.push(setInterval(updateRates, 10 * 1000))
+    this.intervals.push(setInterval(updateRatesFixer, 10 * 1000))
+    this.intervals.push(setInterval(updateRatesFixer1, 10 * 1000))
+    this.intervals.push(setInterval(updateRatesFixer2, 10 * 1000))
   }
 }
 

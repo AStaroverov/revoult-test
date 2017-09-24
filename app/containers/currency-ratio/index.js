@@ -1,15 +1,19 @@
 // @flow
 import type {Currency} from 'app/types/currency'
+import type {MapSourceToRates, Rates, Source} from 'app/types/rates'
 
 import {mapCurrencyToIconClassName} from 'app/constants/currencies'
 
+import {forEach} from 'lodash'
 import {connect} from 'react-redux'
 import {createSelector} from 'reselect'
 
 import {composeSelectors} from 'app/utils'
 
-import * as rates from 'app/selectors/rates'
-import * as calculator from 'app/selectors/calculator'
+import * as ratesSelectors from 'app/selectors/rates'
+import * as calculatorSelectors from 'app/selectors/calculator'
+
+import {actions as ratesActions} from 'app/store/modules/rates'
 
 import Component from 'app/components/currency-ratio'
 
@@ -21,32 +25,49 @@ type Pair = {
   from: FromTo,
   to: FromTo
 }
+type Pairs = Array<Pair>
 type Selectors = {
-  pair: Pair
+  source: Source,
+  pairs: Pairs
 }
 const selectors: () => Selectors = composeSelectors({
-  pair: createSelector(
-    calculator.getBaseCurrency,
-    calculator.getSecondCurrency,
-    rates.getCoefficientForSecondCurrency,
-    (baseCurrency: string, secondCurrency: string, secondCoefficient: number) => {
-      if (!secondCoefficient) {
-        return null
-      }
+  source: ratesSelectors.getCurrentSource,
+  pairs: createSelector(
+    ratesSelectors.getMapSourcesToRates,
+    calculatorSelectors.getBaseCurrency,
+    calculatorSelectors.getSecondCurrency,
+    (mapSourceToRates: MapSourceToRates, baseCurrency: Currency, secondCurrency: Currency) => {
+      const result = []
 
-      return {
-        from: {
-          coefficient: 1,
-          symbolClassName: mapCurrencyToIconClassName[baseCurrency]
-        },
-        to: {
-          coefficient: secondCoefficient,
-          symbolClassName: mapCurrencyToIconClassName[secondCurrency]
+      forEach(mapSourceToRates, (rates: Rates, source: Source) => {
+        const coefficient = ratesSelectors.getCoefficient(mapSourceToRates, source, baseCurrency, secondCurrency)
+
+        if (coefficient) {
+          result.push({
+            source,
+            from: {
+              coefficient: 1,
+              symbolClassName: mapCurrencyToIconClassName[baseCurrency]
+            },
+            to: {
+              coefficient: coefficient,
+              symbolClassName: mapCurrencyToIconClassName[secondCurrency]
+            }
+          })
         }
-      }
+      })
+
+      return result.length > 0 ? result : null
     }
   )
 })
 
-export type Props = Selectors
-export default connect(selectors)(Component)
+type Actions = {
+  setSource: (source: Source) => void
+}
+const actions: () => Actions = () => ({
+  setSource: ratesActions.setSource
+})
+
+export type Props = Selectors & Actions
+export default connect(selectors, actions)(Component)

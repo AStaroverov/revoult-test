@@ -8,7 +8,7 @@ import * as currencies from 'app/selectors/currencies'
 import * as calculator from 'app/selectors/calculator'
 
 import {actions as calculatorActions} from 'app/store/modules/calculator'
-import {updateRates} from 'app/actions/currencies'
+import {updateRates} from 'app/actions/rates'
 import {convertUnitsByCurrentState} from 'app/actions/wallets'
 
 import Component from 'app/components/calculator'
